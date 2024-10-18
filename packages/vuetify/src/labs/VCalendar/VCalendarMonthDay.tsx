@@ -10,7 +10,7 @@ import { genericComponent, propsFactory, useRender } from '@/util'
 
 export type VCalendarMonthDaySlots = {
   default: never
-  content: never
+  content: {events?: Array<Record<any, any>>}
   title: { title?: number | string }
   event: { day?: Object, allDay: boolean, event: Record<string, unknown> }
 }
@@ -58,7 +58,7 @@ export const VCalendarMonthDay = genericComponent<VCalendarMonthDaySlots>()({
 
           { !props.day?.isHidden && (
             <div key="content" class="v-calendar-weekly__day-content">
-              { slots.content?.() ?? (
+              { slots.content?.({events: props.events}) ?? (
                 <div>
                   <div class="v-calendar-weekly__day-alldayevents-container">
                     { props.events?.filter(event => event.allDay).map(event => slots.event
